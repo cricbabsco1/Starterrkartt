@@ -1,0 +1,7 @@
+{
+  "name": "Starterkart - E-commerce Solutions for Clothing Brands",
+  "description": "An all-in-one solution for clothing shops and boutiques to sell online with catalog management, payments, and shipping.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
