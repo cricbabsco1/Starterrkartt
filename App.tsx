@@ -48,7 +48,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white border-b border-zinc-100 px-6 pb-8 pt-4 flex flex-col gap-4 animate-in slide-in-from-top duration-300">
+        <div className="md:hidden absolute top-16 left-0 w-full bg-white border-b border-zinc-100 px-6 pb-8 pt-4 flex flex-col gap-4 animate-in slide-in-from-top duration-300">
           {navLinks.map(link => (
             <a key={link.name} href={link.href} onClick={() => setIsOpen(false)} className="text-xl font-bold text-zinc-900">
               {link.name}
@@ -76,7 +76,7 @@ const Hero = ({ links }: { links: { whatsapp: string, portfolio: string } }) => 
         Catalog • COD • UPI • Shipping • WhatsApp Orders • Checkout
       </p>
       <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
-        <a href="#portfolio" className="w-full sm:w-auto bg-zinc-900 text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 hover:bg-zinc-800 transition-all group">
+        <a href="#portfolio" className="w-full sm:w-auto bg-zinc-900 text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 hover:bg-zinc-800 transition-all group text-center">
           View Work <ChevronRight className="group-hover:translate-x-1 transition-transform" />
         </a>
         <a href={links.whatsapp} className="w-full sm:w-auto bg-[#F4C430] text-black px-8 py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 hover:brightness-95 transition-all">
@@ -86,7 +86,7 @@ const Hero = ({ links }: { links: { whatsapp: string, portfolio: string } }) => 
     </div>
     <div className="flex-1 w-full max-w-md md:max-w-none relative">
       <div className="absolute -inset-4 bg-[#F4C430]/10 blur-3xl rounded-full"></div>
-      <img src="https://picsum.photos/800/800?commerce" alt="E-commerce Dashboard" className="relative w-full rounded-2xl shadow-2xl border border-zinc-100" />
+      <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=800" alt="E-commerce Fashion" className="relative w-full rounded-2xl shadow-2xl border border-zinc-100 object-cover aspect-square" />
     </div>
   </section>
 );
@@ -123,8 +123,8 @@ const Services = ({ services }: { services: SiteData['services'] }) => {
               <h3 className="text-xl font-black mb-4">{pillar.title}</h3>
               <ul className="space-y-3">
                 {pillar.items.map(item => (
-                  <li key={item} className="flex items-center gap-2 text-zinc-500 font-medium">
-                    <CheckCircle2 size={16} className="text-zinc-300" />
+                  <li key={item} className="flex items-center gap-2 text-zinc-500 font-medium text-sm">
+                    <CheckCircle2 size={16} className="text-zinc-300 flex-shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -175,7 +175,7 @@ const Pricing = ({ plans }: { plans: PricingPlan[] }) => (
     </div>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
       {plans.map(plan => (
-        <div key={plan.id} className={`relative flex flex-col p-8 rounded-[2.5rem] border ${plan.isPopular ? 'border-[#F4C430] shadow-2xl scale-105 z-10' : 'border-zinc-100'} transition-all`}>
+        <div key={plan.id} className={`relative flex flex-col p-8 rounded-[2.5rem] border ${plan.isPopular ? 'border-[#F4C430] shadow-2xl md:scale-105 z-10 bg-white' : 'border-zinc-100'} transition-all`}>
           {plan.isPopular && (
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#F4C430] text-black px-4 py-1 rounded-full text-xs font-black uppercase whitespace-nowrap">
               Most brands choose this
@@ -223,26 +223,33 @@ const Pricing = ({ plans }: { plans: PricingPlan[] }) => (
   </section>
 );
 
-const Features = () => (
-  <section className="bg-zinc-900 py-16 px-6 overflow-hidden">
-    <div className="flex animate-marquee gap-12 whitespace-nowrap">
-      {[
-        { label: 'COD', icon: Truck },
-        { label: 'UPI', icon: CreditCard },
-        { label: 'WhatsApp Orders', icon: MessageCircle },
-        { label: 'Shipping', icon: Truck },
-        { label: 'Mobile First', icon: Layout },
-        { label: 'Catalog', icon: Layout },
-        { label: 'Easy to Manage', icon: CheckCircle2 },
-      ].map((feat, i) => (
-        <div key={i} className="flex items-center gap-3 bg-zinc-800 px-6 py-4 rounded-2xl border border-zinc-700">
-          <feat.icon size={20} className="text-[#F4C430]" />
-          <span className="text-white font-bold">{feat.label}</span>
+const Features = () => {
+  const items = [
+    { label: 'COD', icon: Truck },
+    { label: 'UPI', icon: CreditCard },
+    { label: 'WhatsApp Orders', icon: MessageCircle },
+    { label: 'Shipping', icon: Truck },
+    { label: 'Mobile First', icon: Layout },
+    { label: 'Catalog', icon: Layout },
+    { label: 'Easy to Manage', icon: CheckCircle2 },
+  ];
+
+  return (
+    <section className="bg-zinc-900 py-16 overflow-hidden">
+      <div className="marquee-container">
+        <div className="animate-marquee flex gap-12 whitespace-nowrap">
+          {/* Render twice for seamless loop */}
+          {[...items, ...items].map((feat, i) => (
+            <div key={i} className="flex items-center gap-3 bg-zinc-800 px-6 py-4 rounded-2xl border border-zinc-700">
+              <feat.icon size={20} className="text-[#F4C430]" />
+              <span className="text-white font-bold">{feat.label}</span>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
-  </section>
-);
+      </div>
+    </section>
+  );
+};
 
 const Process = () => (
   <section className="py-24 px-6 max-w-7xl mx-auto">
@@ -258,7 +265,7 @@ const Process = () => (
         { step: "04", title: "Launch", desc: "Your clothing brand goes live and starts taking orders." },
       ].map((s, i) => (
         <div key={i} className="relative p-10 bg-white rounded-3xl border border-zinc-100 group">
-          <span className="text-5xl font-black text-zinc-50 opacity-0 group-hover:opacity-100 absolute top-4 right-4 transition-all duration-500 select-none">{s.step}</span>
+          <span className="text-5xl font-black text-zinc-50 opacity-0 group-hover:opacity-10 absolute top-4 right-4 transition-all duration-500 select-none">{s.step}</span>
           <div className="w-12 h-12 bg-zinc-900 text-white rounded-full flex items-center justify-center font-black mb-6 z-10 relative">{s.step}</div>
           <h3 className="text-xl font-black mb-2">{s.title}</h3>
           <p className="text-zinc-500 text-sm leading-relaxed">{s.desc}</p>
@@ -308,7 +315,7 @@ const ContactCTA = ({ links }: { links: SiteData['contactLinks'] }) => (
     <div className="mt-16 flex items-center justify-center gap-6">
        <div className="flex -space-x-3">
           {[1,2,3,4].map(i => (
-            <img key={i} src={`https://picsum.photos/100/100?face=${i}`} className="w-10 h-10 rounded-full border-2 border-white" />
+            <img key={i} src={`https://i.pravatar.cc/150?u=${i}`} className="w-10 h-10 rounded-full border-2 border-white" />
           ))}
        </div>
        <p className="text-sm font-bold text-zinc-500">Joined by 150+ clothing shops this month</p>
@@ -378,7 +385,7 @@ const AdminDashboard = ({ data, setData }: { data: SiteData, setData: (d: SiteDa
       id: Math.random().toString(36).substr(2, 9),
       title: 'New Project',
       type: 'Demo',
-      imageUrl: 'https://picsum.photos/800/1200'
+      imageUrl: 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=800'
     };
     setData({ ...data, portfolio: [newItem, ...data.portfolio] });
   };
@@ -415,12 +422,12 @@ const AdminDashboard = ({ data, setData }: { data: SiteData, setData: (d: SiteDa
               <div key={item.id} className="p-6 bg-white border border-zinc-200 rounded-3xl space-y-4">
                 <img src={item.imageUrl} className="w-full h-48 object-cover rounded-xl" />
                 <input 
-                  className="w-full p-2 border border-zinc-100 rounded-lg font-bold"
+                  className="w-full p-2 border border-zinc-200 rounded-lg font-bold"
                   value={item.title}
                   onChange={(e) => updatePortfolio(item.id, { title: e.target.value })}
                 />
                 <select 
-                  className="w-full p-2 border border-zinc-100 rounded-lg"
+                  className="w-full p-2 border border-zinc-200 rounded-lg"
                   value={item.type}
                   onChange={(e) => updatePortfolio(item.id, { type: e.target.value as any })}
                 >
